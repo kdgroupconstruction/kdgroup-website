@@ -77,18 +77,35 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
 
-    // --- 4. Interactive Form Submission with Mock Toast/Modal Dialog ---
+// --- 4. Interactive Form Submission with Mock Toast/Modal Dialog ---
     const contactForm = document.getElementById('construction-contact-form');
     
     if (contactForm) {
         contactForm.addEventListener('submit', (e) => {
-            e.preventDefault();
+            e.preventDefault(); // เบรกฟอร์มเพื่อทำเอฟเฟกต์ป๊อปอัพ
             
             // Gather form data
             const formData = new FormData(contactForm);
             const name = formData.get('name');
             const phone = formData.get('phone');
             const projectType = formData.get('project_type');
+
+            // 🚀 เพิ่มโค้ดส่งข้อมูลไป Formspree ผ่านเบื้องหลัง (AJAX Fetch)
+            fetch(contactForm.action, {
+                method: contactForm.method,
+                body: formData,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            })
+            .then(response => {
+                if (response.ok) {
+                    console.log('ส่งข้อมูลไป Formspree สำเร็จ!');
+                } else {
+                    console.error('มีข้อผิดพลาดจาก Formspree');
+                }
+            })
+            .catch(error => console.error('เกิดข้อผิดพลาดในการเชื่อมต่อเน็ตเวิร์ก:', error));
             
             // Create a premium notification overlay dynamically
             const modalOverlay = document.createElement('div');
