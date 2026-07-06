@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://kdgroupconstruction.github.io/kdgroup-website/sitemap.xml
